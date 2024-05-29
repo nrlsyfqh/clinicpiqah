@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Clinic Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-form {
+            position: relative;
+            min-height: 100vh;
+            z-index: 0;
+            background: #fde0e1;
+            padding: 30px;
+            display: grid;
+            justify-content: center;
+            grid-template-rows: 1fr auto 1fr;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .login-form h1 {
+            text-align: center;
+            font-size: 5rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 
+                -1px -1px 0 #000,  
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
+        }
+
+        .login-form h2 {
+            line-height: 40px;
+            margin-bottom: 5px;
+            font-size: 30px;
+            font-weight: 500;
+            color: #272346;
+            text-align: center;
+        }
+
+        .main {
+            position: relative;
+            display: flex;
+            margin: 30px 0;
+        }
+
+        .content {
+            flex-basis: 50%;
+            padding: 3em;
+            background: #fff;
+            box-shadow: 2px 9px 49px -17px rgba(0, 0, 0, 0.1);
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        .form-img {
+            flex-basis: 50%;
+            background: #dfe5ea;
+            padding: 40px;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            align-items: center;
+            display: grid;
+        }
+
+        .carousel {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+        }
+
+        .carousel-slide {
+            display: none;
+            width: 100%;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 25px;
+            opacity: 0.6;
+            text-align: center;
+        }
+
+        .btn, button, input {
+            border-radius: 35px;
+        }
+
+        .btn:hover, button:hover {
+            color: #272346;
+            transition: 0.5s ease;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .login-form form {
+            margin: 30px 0;
+        }
+
+        .login-form input {
+            outline: none;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #999;
+            padding: 14px 20px;
+            width: 100%;
+            display: inline-block;
+            box-sizing: border-box;
+            border: none;
+            background: #f7fafc;
+            transition: 0.3s ease;
+        }
+
+        .login-form input:focus {
+            background: transparent;
+            border: 1px solid #fdaaaa;
+        }
+
+        .login-form button {
+            font-size: 18px;
+            color: #fff;
+            width: 100%;
+            background: #ee6969;
+            border: none;
+            padding: 14px 15px;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        p.account a {
+            color: #ee6969;
+        }
+
+        p.account a:hover {
+            text-decoration: underline;
+        }
+
+        .input-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .input-container input {
+            padding-right: 30px; /* Make space for the eye icon */
+        }
+
+        .input-container .eye-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .remember-container {
+            display: flex; /* Set display to flex */
+            align-items: center; /* Align items vertically centered */
+            justify-content: center; /* Align content horizontally centered */
+            margin-bottom: 30px;
+        }
+
+        .remember-container label {
+            margin-right: 180px; /* Adjust the margin between checkbox and label */
+        }
+
+        @media (max-width: 736px) {
+            .main {
+                flex-direction: column;
+            }
+            form {
+                margin-top: 30px;
+                margin-bottom: 10px;
+            }
+            .form-img {
+                border-radius: 0;
+                border-bottom-left-radius: 8px;
+                border-bottom-right-radius: 8px;
+                order: 2;
+            }
+            .content {
+                order: 1;
+                border-radius: 0;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+            }
+        }
+    </style>
+</head>
+<body onload="loadCookies()">
+    <div class="login-form">
+        <h1>Happy Health Clinic</h1>
+        <div class="container">
+            <div class="main">
+                <!-- Left Column: Clinic Image Carousel -->
+                <div class="form-img">
+                    <div class="carousel">
+                        <img class="carousel-slide" src="clinic.jpg" alt="Clinic Image 1">
+                        <img class="carousel-slide" src="clinic2.jpg" alt="Clinic Image 2">
+                        <img class="carousel-slide" src="clinic3.jpg" alt="Clinic Image 3">
+                    </div>
+                </div>
+                <!-- Right Column: Login Form -->
+                <div class="content">
+                    <div id="login" style="display: block;">
+                        <h2>Log In</h2>
+                        <form id="loginForm" action="login.php" method="post">
+                            <input type="text" name="name" id="idname" placeholder="User Name" required autocomplete="username">
+                            <div class="input-container">
+                                <input type="password" name="password" id="idpass" placeholder="User Password" required autocomplete="current-password">
+                                <!-- Eye icon for toggling password visibility -->
+                                <i class="fa fa-eye eye-icon" id="eye" onclick="togglePasswordVisibility()"></i>
+                            </div>
+                            <div class="remember-container">
+                                <input type="checkbox" id="idremember" onclick="rememberMe()">
+                                <label for="idremember">Remember Me</label>
+                            </div>
+                            <button class="btn" type="submit">Login</button>
+                            <p class="w3-text-red" id="loginError"></p>
+                        </form>
+                        <p class="account">Don't have an account? <a href="register.html">Register here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function rememberMe(){
+            var email = document.forms["loginForm"]["name"].value;
+            var pass = document.forms["loginForm"]["password"].value;
+            var rememberme = document.forms["loginForm"]["idremember"].checked;
+            if (rememberme && email != "" && pass != "") {
+                setCookies("cname", email, 5);
+                setCookies("cpass", pass, 5);
+                setCookies("cremember", rememberme, 5);
+                console.log("COOKIES:" + email, pass, rememberme);
+            } else {
+                setCookies("cname", "", 5);
+                setCookies("cpass", "", 5);
+                setCookies("cremember", rememberme, 5);
+                document.forms["loginForm"]["name"].value = "";
+                document.forms["loginForm"]["password"].value = "";
+                document.forms["loginForm"]["idremember"].checked = false;
+                console.log("COOKIES:" + email, pass, rememberme);
+            }
+        }
+
+        function setCookies(cookiename, cookiedata, exdays) {
+            console.log("COOKIES:" + cookiename);
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cookiename + "=" + cookiedata + ";" + expires + ";path=/";
+        }
+        
+        function loadCookies(){
+            var name = getCookie("cname");
+            var password = getCookie("cpass");
+            var rememberme = getCookie("cremember");
+            if (name != "" && password != "") {
+                document.forms["loginForm"]["name"].value = name;
+                document.forms["loginForm"]["password"].value = password;
+                if (rememberme) {
+                    document.forms["loginForm"]["idremember"].checked = true;
+                } else {
+                    document.forms["loginForm"]["idremember"].checked = false;
+                }
+            }
+        }
+        
+        function getCookie(cookiename){
+            var name = cookiename + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var cookiearray = decodedCookie.split(';');
+            for (var i = 0; i < cookiearray.length; i++) {
+                var c = cookiearray[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        
+        // Password visibility toggle function
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("idpass");
+            var eyeIcon = document.getElementById("eye");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            }
+        }
+
+        // Image carousel functionality
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("carousel-slide");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex - 1].style.display = "block";
+            setTimeout(showSlides, 3000); // Change image every 3 seconds
+        }
+    </script>
+</body>
+</html>
